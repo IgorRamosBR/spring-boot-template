@@ -9,6 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name="vinho")
@@ -18,17 +23,43 @@ public class Vinho {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	
+	@NotNull(message = "Tipo é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private TipoVinho tipo;
 	
+	@NotNull(message = "Safra é obrigatório")
 	private Integer safra;
 	
+	@NotNull(message = "Volume é obrigatório")
 	private Integer volume;
 	
+	@NotNull(message = "Valor é obrigatório")
 	private BigDecimal valor;
 	
+	private String foto;
+	
+	@Transient
+	private String url;
+	
+	public boolean temFoto() {
+		return !StringUtils.isEmpty(foto); 
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 	public Long getCodigo() {
 		return codigo;
 	}
